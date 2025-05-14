@@ -16,7 +16,7 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 - Adivinhe a palavra correta antes que o sistema seja comprometido
 - Interface com terminal e comandos simulados
 
-🔗 [Jogar Jail Breaker](jailbreaker.html)
+🔗 [Jogar Jail Breaker](https://babisobrinho.github.io/gamelab/jailbreaker.html)
 
 ---
 
@@ -27,7 +27,7 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 - Interface intuitiva e colorida
 - Ranking local com os melhores tempos via **localStorage**
 
-🔗 [Jogar Encryption Rush](https://julyduds.github.io/memory_game/)
+🔗 [Jogar Encryption Rush](https://babisobrinho.github.io/gamelab/encryptionrush.html)
 
 ---
 
@@ -38,7 +38,7 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 - Memorize e repita sequências de cores e sons
 - Temática voltada à segurança digital
 
-🔗 [Jogar Exploit Pattern](https://lenicesoaares.github.io/exploitpattern_game/)
+🔗 [Jogar Exploit Pattern](https://babisobrinho.github.io/gamelab/exploitpattern.html)
 
 ---
 
@@ -48,6 +48,8 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 - Pedra, papel e tesoura com elementos de cibersegurança
 - Firewall vs Vírus vs DDoS
 
+🔗 [Jogar Firewall Duel](https://babisobrinho.github.io/gamelab/firewallduel.html)
+
 ---
 
 ### 🐞 Zero-Day Duel *(Em desenvolvimento)*
@@ -55,6 +57,8 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 
 - Jogo da velha com tema de exploits e patches
 - Estratégia em campo 3x3
+
+🔗 [Jogar Zero-Day Duel](https://babisobrinho.github.io/gamelab/zerodayduel.html)
 
 ---
 
@@ -65,7 +69,7 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 - Terminal interativo com dicas e feedback sonoro
 - Design minimalista com atmosfera de invasão de sistema
 
-🔗 [Jogar Brute Force](bruteforce.html)
+🔗 [Jogar Brute Force](https://babisobrinho.github.io/gamelab/bruteforce.html)
 
 ## 📁 Estrutura do Projeto
 
