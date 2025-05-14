@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JailBreaker | Jogo para Programadores</title>
+    <link rel="icon" type="image/x-icon" href="favicon.svg">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-code"></i> Jail<span>Breaker</span></h1>
+            <div class="score">
+                <div class="wins"><i class="fas fa-trophy"></i> <span id="wins">0</span></div>
+                <div class="losses"><i class="fas fa-skull"></i> <span id="losses">0</span></div>
+            </div>
+        </header>
+
+        <main class="game-area">
+            <section class="forca-section">
+                <div class="forca-container">
+                    <pre id="forca-display"></pre>
+                </div>
+                <div class="lives">
+                    <div class="hearts" id="hearts"></div>
+                    <span class="attempts">Tentativas: <span id="remaining-attempts">6</span>/6</span>
+                </div>
+                
+                <p class="hint-text" id="current-hint"></p>
+            </section>
+
+            <section class="game-section">
+                <div class="word-display" id="word-display"></div>
+                
+                <div class="keyboard">
+    
+                </div>
+                
+                <div class="message-box" id="message">
+                    <i class="fas fa-comment-alt"></i>
+                    <span class="message-text">Clique em uma letra para começar!</span>
+                </div>
+                
+                <div class="actions">
+                    <button id="hint-btn" class="btn hint-btn">
+                        <i class="fas fa-lightbulb"></i> Dica
+                    </button>
+                    <button id="sound-btn" class="btn sound-btn">
+                        <i class="fas fa-volume-up"></i> Som
+                    </button>
+                    <button id="restart-btn" class="btn restart-btn hidden">
+                        <i class="fas fa-sync-alt"></i> Jogar Novamente
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <div class="ranking-container hidden" id="ranking">
+            <h3><i class="fas fa-crown"></i> Ranking</h3>
+            <ol id="ranking-list"></ol>
+            <button id="close-ranking" class="btn">Fechar</button>
+        </div>
+        <div class="overlay hidden" id="overlay"></div>
+        
+        <button id="show-ranking" class="btn ranking-btn">
+            <i class="fas fa-trophy"></i> 
+        </button>
+
+        <footer class="footer">
+            <p>&copy; <span id="current-year"></span> Game Lab - IEFP Leiria. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+
+    <script src="js/jailbreaker.js"></script>
+</body>
+</html>

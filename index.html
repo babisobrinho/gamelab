@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Lab | TETPSI 2</title>
+    <link rel="icon" type="image/x-icon" href="favicon.svg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="header">
+            <div class="logo">
+                <h1><i class="fas fa-code"></i> Game <span>Lab</span></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active"><i class="fas fa-dice"></i> Jogos</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> Sobre</a></li>
+                <li><a href="team.html"><i class="fas fa-laptop-code"></i> Créditos</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="games-grid">
+                <!-- Jogo da Forca -->
+                <a href="jailbreaker.html" class="play-btn">
+                    <div class="game-card">
+                        <div class="game-icon">
+                            <i class="fas fa-user-secret"></i>
+                        </div>
+                        <h3>Jail Breaker</h3>
+                        <div class="game-info">
+                            Adivinhe a palavra antes que o sistema seja comprometido
+                        </div>
+                        <span class="players">
+                            <i class="fas fa-user"></i> 1 jogador
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Jogo da Memória -->
+                <a href="encryptionrush.html" class="play-btn">
+                    <div class="game-card">
+                        <div class="game-icon">
+                            <i class="fa-solid fa-fingerprint"></i>
+                        </div>
+                        <h3>Encryption Rush</h3>
+                        <div class="game-info">
+                            Encontre os pares o mais rápido que conseguir
+                        </div>
+                        <span class="players">
+                            <i class="fas fa-user"></i> 1 jogador
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Sequência de Cores -->
+                <a href="exploitpattern.html" class="play-btn">
+                    <div class="game-card">
+                        <div class="game-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Exploit Pattern</h3>
+                        <div class="game-info">
+                            Sequências que exploraram as vulnerabilidades do sistema
+                        </div>
+                        <span class="players">
+                            <i class="fas fa-user"></i> 1 jogador
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Pedra Papel Tesoura -->
+                <a href="firewallduel.html" class="play-btn">
+                    <div class="game-card">
+                        <div class="game-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Firewall Duel</h3>
+                        <div class="game-info">
+                            Vírus vs Firewall vs DDoS - o clássico duelo hacker
+                        </div>
+                        <span class="players">
+                            <i class="fas fa-user-group"></i> 2 jogadores
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Jogo do Galo -->
+                <a href="zerodayduel.html" class="play-btn">
+                    <div class="game-card">
+                        <div class="game-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <h3>Zero-Day Duel</h3>
+                        <div class="game-info">
+                            Exploits vs Patches em um combate estratégico 3x3
+                        </div>
+                        <span class="players">
+                            <i class="fas fa-user-group"></i> 2 jogadores
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Adivinha O Número -->
+                <a href="bruteforce.html" class="play-btn">
+                    <div class="game-card">
+                        <div class="game-icon">
+                            <i class="fas fa-unlock-keyhole"></i>
+                        </div>
+                        <h3>Brute Force</h3>
+                        <div class="game-info">
+                            Quebre a senha do sistema com o menor número de tentativas
+                        </div>
+                        <span class="players">
+                            <i class="fas fa-user"></i> 1 jogador
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; <span id="current-year"></span> Game Lab - IEFP Leiria. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

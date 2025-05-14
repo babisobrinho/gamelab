@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre | Game Lab TETPSI 2</title>
+    <link rel="icon" type="image/x-icon" href="favicon.svg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="header">
+            <div class="logo">
+                <h1><i class="fas fa-code"></i> Game <span>Lab</span></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-dice"></i> Jogos</a></li>
+                <li><a href="about.html" class="active"><i class="fas fa-info-circle"></i> Sobre</a></li>
+                <li><a href="team.html"><i class="fas fa-laptop-code"></i> Créditos</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="about-content">
+                <div class="about-card">
+                    <h3><i class="fas fa-rocket"></i> Missão</h3>
+                    <p>
+                        O Game Lab foi desenvolvido por alunos do curso Técnico Especialista de Tecnologias e
+                        Programação de Sistemas de Informação para ser apresentado no 16º Fórum Emprego e Formação
+                        em Leiria, com o objetivo de demonstrar as nossas habilidades em desenvolvimento web.
+                    </p>
+                </div>
+                
+                <div class="about-card">
+                    <h3><i class="fas fa-lightbulb"></i> Conceito</h3>
+                    <p>
+                        Criamos uma coleção de jogos com a temática hacker, onde cada jogo clássico foi reinventado com
+                        uma narrativa de cibersegurança, de forma a tornar o aprendizado de programação mais divertido e imersivo.
+                    </p>
+                </div>
+                
+                <div class="about-card">
+                    <h3><i class="fas fa-code"></i> Tecnologias</h3>
+                    <ul class="tech-list">
+                        <li><i class="fab fa-html5"></i> HTML5</li>
+                        <li><i class="fab fa-css3-alt"></i> CSS3</li>
+                        <li><i class="fab fa-js"></i> JavaScript</li>
+                        <li><i class="fas fa-code-branch"></i> GitHub</li>
+                    </ul>
+                </div>
+                
+                <div class="about-card">
+                    <h3><i class="fas fa-graduation-cap"></i> Contexto Educacional</h3>
+                    <p>
+                        Este projeto integra o plano curricular do curso e demonstra na prática a aplicação dos conhecimentos
+                        multidisciplinares adquiridos. Além de desenvolver competências técnicas, reforça o trabalho em equipa
+                        e serve como portfólio para os alunos.
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; <span id="current-year"></span> Game Lab - IEFP Leiria. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emoji Encryption | Jogo para Programadores</title>
+  <link rel="icon" type="image/x-icon" href="favicon.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2b2d42;
+      --secondary: #8d99ae;
+      --accent: #ef233c;
+      --highlight: #06d6a0;
+      --light: #edf2f4;
+      --dark: #1a1a2e;
+      --success: #4cc9f0;
+      --danger: #f72585;
+      --warning: #f8961e;
+      --code-bg: #011627;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: var(--light);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 900px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      padding: 25px;
+    }
+
+    .header {
+      background: var(--primary);
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--highlight);
+      margin: -25px -25px 25px -25px;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header h1 span {
+      color: var(--highlight);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .header h1 i {
+      color: var(--highlight);
+    }
+
+    .score {
+      display: flex;
+      gap: 20px;
+    }
+
+    .wins, .losses {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 1.2rem;
+    }
+
+    .wins {
+      color: var(--highlight);
+    }
+
+    .losses {
+      color: var(--light);
+    }
+
+    #game-board {
+      display: grid;
+      grid-template-columns: repeat(4, 70px);
+      gap: 8px;
+      justify-content: center;
+      margin: 20px auto;
+      width: fit-content;
+    }
+
+    .card {
+      width: 70px;
+      height: 70px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: transparent;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .card.flipped {
+      background: var(--light);
+      color: var(--dark);
+      transform: rotateY(180deg);
+      cursor: default;
+    }
+
+    .card.matched {
+      background: var(--success);
+      color: white;
+      border-color: var(--success);
+      cursor: not-allowed;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .level-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .timer {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 1.1rem;
+    }
+
+    .btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--secondary);
+      color: var(--dark);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    #status {
+      font-size: 1.1rem;
+      text-align: center;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .status-success {
+      color: var(--highlight);
+      border-left: 4px solid var(--success);
+    }
+
+    .status-info {
+      border-left: 4px solid var(--highlight);
+    }
+
+    .rankings {
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .rankings h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+      color: var(--highlight);
+    }
+
+    #ranking-list {
+      list-style: none;
+    }
+
+    #ranking-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        width: 55px;
+        height: 55px;
+        font-size: 1.5rem;
+      }
+      
+      #game-board {
+        grid-template-columns: repeat(4, 55px);
+      }
+      
+      .controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+    }
+
+    /* Animações */
+    @keyframes flip {
+      0% { transform: rotateY(0); }
+      100% { transform: rotateY(180deg); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .pulse {
+      animation: pulse 0.5s;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .bounce {
+      animation: bounce 0.5s;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+    <h1><i class="fas fa-code"></i> Emoji <span>Encryption</span></h1>
+      <div class="score">
+        <div class="wins"><i class="fas fa-trophy"></i> <span id="wins">0</span></div>
+        <div class="losses"><i class="fas fa-stopwatch"></i> <span id="timer-display">0s</span></div>
+      </div>
+    </header>
+
+    <div class="controls">
+      <div class="level-info">
+        <span><i class="fas fa-layer-group"></i> Nível: <span id="level">1</span></span>
+        <span class="timer"><i class="fas fa-stopwatch"></i> <span id="timer">0s</span></span>
+      </div>
+      <button onclick="toggleSound()" class="btn" id="sound-btn">
+        <i class="fas fa-volume-up"></i> Som
+      </button>
+    </div>
+
+    <div id="game-board"></div>
+    <div id="status" class="status-info">Encontre todos os pares para avançar de nível!</div>
+
+    <div class="rankings">
+      <h2><i class="fas fa-crown"></i> Melhores Tempos</h2>
+      <ul id="ranking-list"></ul>
+    </div>
+  </div>
+
+  <audio id="sound-correct" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" preload="auto"></audio>
+  <audio id="sound-wrong" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" preload="auto"></audio>
+  <audio id="sound-win" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" preload="auto"></audio>
+
+  <script>
+    // Substitua o array emojiBase por classes do Font Awesome
+    const iconBase = [
+        'fa-code',          // Ícone de código
+        'fa-laptop-code',   // Laptop com código
+        'fa-terminal',      // Terminal
+        'fa-keyboard',      // Teclado
+        'fa-microchip',     // Microchip
+        'fa-server',        // Servidor
+        'fa-database',      // Banco de dados
+        'fa-bug',           // Bug (debug)
+        'fa-code-branch',   // Branch (Git)
+        'fa-rocket',        // Foguete
+        'fa-lock',          // Cadeado (segurança)
+        'fa-tools',         // Ferramentas
+        'fa-save',          // Disquete (salvar)
+        'fa-wifi',          // Wi-Fi
+        'fa-hammer',        // Martelo
+        'fa-calculator',    // Calculadora
+        'fa-plug',          // Plugue
+        'fa-folder',        // Pasta
+        'fa-file-code',    // Arquivo de código
+        'fa-globe'          // Globo (internet)
+    ];
+    
+    let icons = [];
+    let cards = [];
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+    let matchedPairs = 0;
+    let startTime;
+    let timerInterval;
+    let level = 1;
+    let wins = 0;
+    let soundEnabled = true;
+    const maxPairsPerLevel = [4, 6, 8, 10, 12, 14, 16, 18, 20]; 
+    
+    // Elementos DOM
+    const board = document.getElementById("game-board");
+    const status = document.getElementById("status");
+    const timerDisplay = document.getElementById("timer");
+    const levelSpan = document.getElementById("level");
+    const rankingList = document.getElementById("ranking-list");
+    const winsSpan = document.getElementById("wins");
+    const soundBtn = document.getElementById("sound-btn");
+    
+    // Sons
+    const soundCorrect = document.getElementById("sound-correct");
+    const soundWrong = document.getElementById("sound-wrong");
+    const soundWin = document.getElementById("sound-win");
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      if (soundEnabled) {
+        soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> Som';
+      } else {
+        soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i> Som';
+      }
+    }
+
+    function playSound(sound) {
+      if (soundEnabled) {
+        sound.currentTime = 0;
+        sound.play().catch(e => console.log("Erro ao reproduzir som:", e));
+      }
+    }
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function createBoard() {
+      let numPairs = maxPairsPerLevel[Math.min(level - 1, maxPairsPerLevel.length - 1)];
+      icons = iconBase.slice(0, numPairs);
+      cards = [...icons, ...icons];
+      shuffle(cards);
+      board.innerHTML = "";
+      matchedPairs = 0;
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+      startTime = new Date().getTime();
+      clearInterval(timerInterval);
+      timerInterval = setInterval(updateTimer, 1000);
+      timerDisplay.textContent = "0s";
+      levelSpan.textContent = level;
+      status.className = "status-info";
+      status.textContent = `Nível ${level}: Encontre todos os ${numPairs} pares!`;
+
+      const rows = Math.ceil(cards.length / 4);
+      board.style.gridTemplateRows = `repeat(${rows}, 70px)`;
+
+      cards.forEach((iconClass, index) => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.dataset.symbol = iconClass;
+        card.dataset.index = index;
+        card.addEventListener("click", flipCard);
+        
+        // Adiciona o elemento <i> para o ícone (inicialmente vazio)
+        const iconElement = document.createElement("i");
+        iconElement.className = `fas ${iconClass}`;
+        iconElement.style.display = 'none'; // Inicialmente escondido
+        card.appendChild(iconElement);
+        
+        board.appendChild(card);
+      });
+    }
+
+    function flipCard() {
+      if (lockBoard || this.classList.contains("flipped") || this.classList.contains("matched")) return;
+      
+      this.classList.add("flipped");
+      // Mostra o ícone
+      const icon = this.querySelector('i');
+      icon.style.display = 'inline-block';
+      
+      if (!firstCard) {
+        firstCard = this;
+      } else {
+        secondCard = this;
+        checkMatch();
+      }
+    }
+
+    function checkMatch() {
+      lockBoard = true;
+      
+      if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
+        matchedPairs++;
+        playSound(soundCorrect);
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+        firstCard.classList.add("pulse");
+        secondCard.classList.add("pulse");
+        resetCards();
+        
+        if (matchedPairs === icons.length) {
+          clearInterval(timerInterval);
+          const timeTaken = Math.floor((new Date().getTime() - startTime) / 1000);
+          wins++;
+          winsSpan.textContent = wins;
+          status.className = "status-success";
+          status.textContent = `🎉 Nível ${level} completo em ${timeTaken} segundos!`;
+          playSound(soundWin);
+          updateRanking(level, timeTaken);
+          level++;
+          
+          setTimeout(() => {
+            createBoard();
+            displayRanking();
+          }, 2000);
+        }
+      } else {
+        playSound(soundWrong);
+        setTimeout(() => {
+          firstCard.classList.remove("flipped");
+          secondCard.classList.remove("flipped");
+          // Esconde os ícones novamente
+          firstCard.querySelector('i').style.display = 'none';
+          secondCard.querySelector('i').style.display = 'none';
+          resetCards();
+        }, 800);
+      }
+    }
+
+    function resetCards() {
+      [firstCard, secondCard] = [null, null];
+      lockBoard = false;
+    }
+
+    function updateTimer() {
+      const elapsed = Math.floor((new Date().getTime() - startTime) / 1000);
+      timerDisplay.textContent = `${elapsed}s`;
+    }
+
+    function updateRanking(lvl, newTime) {
+      let rankings = JSON.parse(localStorage.getItem("memoryDevRankings")) || {};
+      if (!rankings[lvl]) rankings[lvl] = [];
+      rankings[lvl].push(newTime);
+      rankings[lvl].sort((a, b) => a - b);
+      rankings[lvl] = rankings[lvl].slice(0, 5);
+      localStorage.setItem("memoryDevRankings", JSON.stringify(rankings));
+    }
+
+    function displayRanking() {
+      let rankings = JSON.parse(localStorage.getItem("memoryDevRankings")) || {};
+      const list = rankings[level] || [];
+      rankingList.innerHTML = "";
+      
+      if (list.length === 0) {
+        rankingList.innerHTML = "<li>Nenhum recorde ainda</li>";
+        return;
+      }
+      
+      list.forEach((time, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<span>#${index + 1}</span> <span>${time}s</span>`;
+        rankingList.appendChild(li);
+      });
+    }
+
+    // Inicializa o jogo
+    createBoard();
+    displayRanking();
+  </script>
+</body>
+</html>
