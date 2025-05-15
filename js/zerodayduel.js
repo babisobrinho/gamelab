@@ -55,12 +55,16 @@ document.addEventListener('DOMContentLoaded', () => {
         gameHistory: []
     };
 
+ 
+
     const sons = {
-        move: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3'),
-        win: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'),
-        draw: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-game-over-213.mp3'),
-        error: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3')
-    };
+    moveX: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'), // Som para jogador X
+    moveO: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'), // Som diferente para jogador O
+    win: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'),
+    draw: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-lose-2027.mp3'),
+    error: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3')
+};
+
 
     let typingInterval = null;
     function typeWriter(element, text, speed = 50) {
@@ -124,43 +128,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function fazerJogada(index) {
-        if (estadoJogo.gameOver || estadoJogo.board[index] !== '') {
-            tocarSom(sons.error);
-            typeWriter(elementos.status, statusMessages[4]);
-            return;
-        }
-
-        estadoJogo.board[index] = estadoJogo.currentPlayer;
-        tocarSom(sons.move);
-        atualizarTabuleiro();
-
-        if (!primeiraJogadaFeita) {
-            // Frase fixa na primeira jogada
-            typeWriter(elementos.status, frasesAtaque[0]); // "> Exploit detectado! Tentando invadir o sistema..."
-            primeiraJogadaFeita = true;
-        } else {
-            // Frases aleatórias depois da primeira jogada
-            if (!estadoJogo.gameOver) {
-                const aleatoria = frasesAtaque[Math.floor(Math.random() * (frasesAtaque.length -1)) +1]; // evitar a frase[0]
-                typeWriter(elementos.status, aleatoria);
+            function fazerJogada(index) {
+            if (estadoJogo.gameOver || estadoJogo.board[index] !== '') {
+                tocarSom(sons.error);
+                typeWriter(elementos.status, statusMessages[4]);
+                return;
             }
-        }
 
-        if (verificarVitoria(estadoJogo.currentPlayer)) {
-            finalizarJogo(estadoJogo.currentPlayer);
-            return;
-        }
+            // Tocar som diferente para cada jogador
+            if (estadoJogo.currentPlayer === 'X') {
+                tocarSom(sons.moveX);
+            } else {
+                tocarSom(sons.moveO);
+            }
 
-        if (verificarEmpate()) {
-            finalizarJogo('draw');
-            return;
-        }
+            estadoJogo.board[index] = estadoJogo.currentPlayer;
+            atualizarTabuleiro();
 
-        estadoJogo.currentPlayer = estadoJogo.currentPlayer === 'X' ? 'O' : 'X';
-        atualizarIndicadorJogador();
-        definirMensagem(`Vez do Jogador ${estadoJogo.currentPlayer}`, 'info');
-    }
+            if (!primeiraJogadaFeita) {
+                typeWriter(elementos.status, frasesAtaque[0]);
+                primeiraJogadaFeita = true;
+            } else {
+                if (!estadoJogo.gameOver) {
+                    const aleatoria = frasesAtaque[Math.floor(Math.random() * (frasesAtaque.length -1)) +1];
+                    typeWriter(elementos.status, aleatoria);
+                }
+            }
+
+            if (verificarVitoria(estadoJogo.currentPlayer)) {
+                finalizarJogo(estadoJogo.currentPlayer);
+                return;
+            }
+
+            if (verificarEmpate()) {
+                finalizarJogo('draw');
+                return;
+            }
+
+            estadoJogo.currentPlayer = estadoJogo.currentPlayer === 'X' ? 'O' : 'X';
+            atualizarIndicadorJogador();
+            definirMensagem(`Vez do Jogador ${estadoJogo.currentPlayer}`, 'info');
+        }
 
     function verificarVitoria(player) {
         const winPatterns = [
@@ -189,28 +197,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function finalizarJogo(resultado) {
-        estadoJogo.gameOver = true;
-        if (resultado === 'X') {
-            estadoJogo.scores.playerX++;
-            elementos.playerXScore.textContent = estadoJogo.scores.playerX;
-            typeWriter(elementos.status, statusMessages[1]);
-            definirMensagem('🎉 Jogador X venceu!', 'success');
-            tocarSom(sons.win);
-        } else if (resultado === 'O') {
-            estadoJogo.scores.playerO++;
-            elementos.playerOScore.textContent = estadoJogo.scores.playerO;
-            typeWriter(elementos.status, statusMessages[2]);
-            definirMensagem('🎉 Jogador O venceu!', 'success');
-            tocarSom(sons.win);
-        } else {
-            estadoJogo.scores.draws++;
-            elementos.draws.textContent = estadoJogo.scores.draws;
-            typeWriter(elementos.status, statusMessages[3]);
-            definirMensagem('🤝 Empate!', 'info');
-            tocarSom(sons.draw);
-        }
-        salvarPartida(resultado);
+    estadoJogo.gameOver = true;
+    
+    // Força uma interação com o som antes de tocar (para navegadores restritivos)
+    if (estadoJogo.somAtivado) {
+        sons.win.load().catch(e => console.log("Erro ao carregar som:", e));
     }
+
+    if (resultado === 'X') {
+        estadoJogo.scores.playerX++;
+        elementos.playerXScore.textContent = estadoJogo.scores.playerX;
+        typeWriter(elementos.status, statusMessages[1]);
+        definirMensagem('🎉 Jogador X venceu!', 'success');
+        tocarSom(sons.win);
+    } else if (resultado === 'O') {
+        estadoJogo.scores.playerO++;
+        elementos.playerOScore.textContent = estadoJogo.scores.playerO;
+        typeWriter(elementos.status, statusMessages[2]);
+        definirMensagem('🎉 Jogador O venceu!', 'success');
+        tocarSom(sons.win);
+    } else {
+        estadoJogo.scores.draws++;
+        elementos.draws.textContent = estadoJogo.scores.draws;
+        typeWriter(elementos.status, statusMessages[3]);
+        definirMensagem('🤝 Empate!', 'info');
+        tocarSom(sons.draw);
+    }
+    salvarPartida(resultado);
+}
 
     function atualizarStatus() {
         typeWriter(elementos.status, statusMessages[0]);
@@ -234,11 +248,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function tocarSom(som) {
-        if (estadoJogo.somAtivado) {
-            som.currentTime = 0;
-            som.play().catch(e => console.log("Erro ao reproduzir som:", e));
-        }
+    if (estadoJogo.somAtivado && som) {
+        som.currentTime = 0; // Reinicia o som se já estiver tocando
+        som.play().catch(e => {
+            console.log("Erro ao reproduzir som:", e);
+            // Tenta reproduzir novamente se falhar (para contornar bloqueios de navegador)
+            document.body.addEventListener('click', () => som.play(), { once: true });
+        });
     }
+}
 
     function definirMensagem(texto, tipo = 'info') {
         elementos.mensagem.textContent = texto;
