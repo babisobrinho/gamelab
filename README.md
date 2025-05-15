@@ -48,7 +48,7 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 - Pedra, papel e tesoura com elementos de cibersegurança
 - Firewall vs Vírus vs DDoS
 
-🔗 [Jogar Firewall Duel](https://babisobrinho.github.io/gamelab/firewallduel.html)
+🔗 [Jogar Firewall Duel](https://babisobrinho.github.io/gamelab/bugeater.html)
 
 ---
 
