@@ -336,6 +336,8 @@ document.addEventListener('DOMContentLoaded', () => {
     elementos.botaoSom.addEventListener('click', alternarSom);
     elementos.botaoReiniciar.addEventListener('click', () => {
         elementos.guessDisplay.classList.remove('bounce', 'shake', 'success');
+        elementos.tryBtn.classList.remove('hidden');
+        elementos.clearBtn.classList.remove('hidden');
         iniciarJogo();
     });
     elementos.showRanking.addEventListener('click', mostrarRanking);
