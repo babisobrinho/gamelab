@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ranking: document.getElementById('ranking'),
         overlay: document.getElementById('overlay'),
         rankingList: document.getElementById('ranking-list'),
-        showRanking: document.getElementById('show-ranking'),
         closeRanking: document.getElementById('close-ranking')
     };
 
@@ -357,7 +356,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupEventListeners() {
         elements.soundBtn.addEventListener('click', toggleSound);
         elements.restartBtn.addEventListener('click', startNewGame);
-        elements.showRanking.addEventListener('click', showRanking);
         elements.closeRanking.addEventListener('click', hideRanking);
         elements.overlay.addEventListener('click', hideRanking);
     }
