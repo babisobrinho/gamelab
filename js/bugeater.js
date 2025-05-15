@@ -15,7 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
         upBtn: document.getElementById('up-btn'),
         downBtn: document.getElementById('down-btn'),
         leftBtn: document.getElementById('left-btn'),
-        rightBtn: document.getElementById('right-btn')
+        rightBtn: document.getElementById('right-btn'),
+        ranking: document.getElementById('ranking'),
+        rankingList: document.getElementById('ranking-list'),
+        showRanking: document.getElementById('show-ranking'),
+        closeRanking: document.getElementById('close-ranking')
     };
 
     // Contexto do canvas
@@ -104,31 +108,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Exibe o ranking
-    function exibirRanking() {
-        const rankingContainer = document.createElement('div');
-        rankingContainer.className = 'ranking-container';
-        rankingContainer.innerHTML = `
-            <h3><i class="fas fa-trophy"></i> Ranking</h3>
-            <div class="ranking-list">
-                ${estadoJogo.ranking.map((entry, index) => `
-                    <div class="ranking-entry ${index === 0 ? 'top-player' : ''}">
-                        <span class="rank">${index + 1}.</span>
-                        <span class="score">${entry.score} pts</span>
-                        <span class="time">${entry.time}</span>
-                        <span class="date">${entry.date}</span>
-                    </div>
-                `).join('')}
+    function mostrarRanking() {
+        elementos.rankingList.innerHTML = estadoJogo.ranking.map((entry, index) => `
+            <div class="ranking-entry ${index === 0 ? 'top-player' : ''}">
+                <span class="rank">${index + 1}º</span>
+                <span class="name">${entry.score} pts</span>
+                <span class="time">${entry.time}</span>
             </div>
-        `;
+        `).join('');
         
-        // Remove o ranking anterior se existir
-        const oldRanking = document.querySelector('.ranking-container');
-        if (oldRanking) {
-            oldRanking.remove();
+        elementos.ranking.classList.remove('hidden');
+        elementos.overlay.classList.remove('hidden');
+    }
+
+    function gameOver() {
+        estadoJogo.isGameOver = true;
+        clearInterval(estadoJogo.gameLoop);
+        clearInterval(estadoJogo.timerInterval);
+        
+        // Atualiza high score
+        if (estadoJogo.score > estadoJogo.highScore) {
+            estadoJogo.highScore = estadoJogo.score;
+            localStorage.setItem('snakeHighScore', estadoJogo.highScore);
         }
         
-        // Adiciona o novo ranking à tela de game over
-        document.querySelector('.game-over-content').appendChild(rankingContainer);
+        // Adiciona ao ranking
+        atualizarRanking(estadoJogo.score, estadoJogo.currentTime);
+        
+        elementos.finalScore.textContent = estadoJogo.score;
+        elementos.finalTime.textContent = estadoJogo.currentTime;
+        elementos.gameOverScreen.classList.remove('hidden');
+        elementos.overlay.classList.remove('hidden');
+        
+        tocarSom(sons.gameOver);
     }
 
     // Loop principal do jogo
@@ -369,6 +381,15 @@ document.addEventListener('DOMContentLoaded', () => {
     elementos.soundBtn.addEventListener('click', alternarSom);
     elementos.restartBtn.addEventListener('click', iniciarJogo);
     elementos.playAgainBtn.addEventListener('click', iniciarJogo);
+    elementos.showRanking.addEventListener('click', mostrarRanking);
+    elementos.closeRanking.addEventListener('click', () => {
+        elementos.ranking.classList.add('hidden');
+        elementos.overlay.classList.add('hidden');
+    });
+    elementos.overlay.addEventListener('click', () => {
+        elementos.ranking.classList.add('hidden');
+        elementos.overlay.classList.add('hidden');
+    });
 
     // Inicia o jogo
     iniciarJogo();
