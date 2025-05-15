@@ -133,11 +133,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Variável para controlar o intervalo de digitação
+    let typingInterval = null;
+
     // Atualiza o terminal
     function atualizarTerminal(mensagem) {
-        elementos.terminal.textContent = mensagem;
+        // Cancela qualquer digitação em andamento
+        if (typingInterval) {
+            clearInterval(typingInterval);
+            typingInterval = null;
+        }
+
+        // Limpa o terminal e prepara para nova digitação
+        elementos.terminal.textContent = '';
         elementos.terminal.classList.add('typing');
-        setTimeout(() => elementos.terminal.classList.remove('typing'), 500);
+
+        // Divide a mensagem em linhas (se houver quebras de linha)
+    const linhas = mensagem.split('\n');
+    let linhaAtual = 0;
+    let textoAcumulado = '';
+    let posicaoCaractere = 0;
+
+    function digitarProximoCaractere() {
+        // Verifica se ainda há linhas para digitar
+        if (linhaAtual < linhas.length) {
+            const linha = linhas[linhaAtual];
+            
+            // Verifica se ainda há caracteres na linha atual
+            if (posicaoCaractere < linha.length) {
+                textoAcumulado += linha.charAt(posicaoCaractere);
+                elementos.terminal.textContent = textoAcumulado;
+                posicaoCaractere++;
+                typingInterval = setTimeout(digitarProximoCaractere, 50);
+            } else {
+                // Move para a próxima linha
+                linhaAtual++;
+                if (linhaAtual < linhas.length) {
+                    textoAcumulado += '\n';
+                    posicaoCaractere = 0;
+                    typingInterval = setTimeout(digitarProximoCaractere, 50);
+                } else {
+                    // Finaliza a digitação
+                    elementos.terminal.classList.remove('typing');
+                    typingInterval = null;
+                }
+            }
+        } else {
+            // Finaliza a digitação
+            elementos.terminal.classList.remove('typing');
+            typingInterval = null;
+        }
+    }
+
+    // Inicia o processo de digitação
+    digitarProximoCaractere();
     }
 
     // Atualiza as tentativas restantes
