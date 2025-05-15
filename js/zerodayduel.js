@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rankingList: document.getElementById('ranking-list'),
         showRanking: document.getElementById('show-ranking'),
         closeRanking: document.getElementById('close-ranking')
+        
     };
 
     const statusMessages = [
@@ -199,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function finalizarJogo(resultado) {
     estadoJogo.gameOver = true;
     
-    // Força uma interação com o som antes de tocar (para navegadores restritivos)
+    // Força uma interação com o som antes de tocar
     if (estadoJogo.somAtivado) {
         sons.win.load().catch(e => console.log("Erro ao carregar som:", e));
     }
@@ -252,7 +253,6 @@ document.addEventListener('DOMContentLoaded', () => {
         som.currentTime = 0; // Reinicia o som se já estiver tocando
         som.play().catch(e => {
             console.log("Erro ao reproduzir som:", e);
-            // Tenta reproduzir novamente se falhar (para contornar bloqueios de navegador)
             document.body.addEventListener('click', () => som.play(), { once: true });
         });
     }
@@ -263,19 +263,31 @@ document.addEventListener('DOMContentLoaded', () => {
         elementos.caixaMensagem.className = 'message-box ' + tipo;
     }
 
-    function salvarPartida(resultado) {
-        const partida = {
-            data: new Date().toLocaleString('pt-BR'),
-            modo: '2 Jogadores',
-            vencedor: resultado === 'X' ? 'Jogador X' : resultado === 'O' ? 'Jogador O' : 'Empate',
-            tabuleiro: [...estadoJogo.board]
-        };
-        estadoJogo.gameHistory.unshift(partida);
-        if (estadoJogo.gameHistory.length > 10) {
-            estadoJogo.gameHistory.pop();
-        }
+    function inicializarRanking() {
+    const historicoSalvo = localStorage.getItem('zerodayduelHistory');
+    if (historicoSalvo) {
+        estadoJogo.gameHistory = JSON.parse(historicoSalvo);
         atualizarRanking();
     }
+}
+    function salvarPartida(resultado) {
+    const partida = {
+        data: new Date().toLocaleString('pt-BR'),
+        modo: '2 Jogadores',
+        vencedor: resultado === 'X' ? 'Jogador X' : resultado === 'O' ? 'Jogador O' : 'Empate',
+        tabuleiro: [...estadoJogo.board]
+    };
+    
+    estadoJogo.gameHistory.unshift(partida);
+    if (estadoJogo.gameHistory.length > 10) {
+        estadoJogo.gameHistory.pop();
+    }
+    
+    // Salvar no localStorage
+    localStorage.setItem('zerodayduelHistory', JSON.stringify(estadoJogo.gameHistory));
+    atualizarRanking();
+}
+
 
     function atualizarRanking() {
         elementos.rankingList.innerHTML = estadoJogo.gameHistory.map((partida, index) => `
@@ -288,10 +300,11 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    function mostrarRanking() {
-        elementos.ranking.classList.remove('hidden');
-        elementos.overlay.classList.remove('hidden');
-    }
+ function mostrarRanking() {
+    atualizarRanking(); // Atualiza antes de mostrar
+    elementos.ranking.classList.remove('hidden');
+    elementos.overlay.classList.remove('hidden');
+}
 
     if (elementos.botaoModo) {
         elementos.botaoModo.style.display = 'none';
