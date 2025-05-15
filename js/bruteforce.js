@@ -48,19 +48,19 @@ document.addEventListener('DOMContentLoaded', () => {
         tentativas: 0,
         maxTentativas: 10,
         currentGuess: [],
-        vitorias: 0,
-        derrotas: 0,
+        vitorias: parseInt(localStorage.getItem('bruteForceWins')) || 0,
+        derrotas: parseInt(localStorage.getItem('bruteForceLosses')) || 0,
         somAtivado: true,
         jogoAtivo: true
     };
 
     // Sons
     const sons = {
-      keyPress: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3'),
-      correto: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3'),
-      errado: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3'),
-      vitoria: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'),
-      derrota: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-lose-2027.mp3')
+        keyPress: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3'),
+        correto: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3'),
+        errado: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3'),
+        vitoria: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'),
+        derrota: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-lose-2027.mp3')
     };
 
     // Inicialização do jogo
@@ -76,6 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
         atualizarGuessDisplay();
         criarTecladoNumerico();
         atualizarTentativas();
+
+        // Atualiza contadores de vitórias/derrotas
+        elementos.vitorias.textContent = estadoJogo.vitorias;
+        elementos.derrotas.textContent = estadoJogo.derrotas;
         
         // Reseta elementos da UI
         elementos.botaoReiniciar.classList.add('hidden');
@@ -83,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         elementos.tryBtn.disabled = false;
         
         // Mensagem inicial
-        definirMensagem('Digite um número de 2 dígitos', 'info');
+        definirMensagem('Adivinhe o número!', 'info');
     }
 
     // Cria o teclado numérico
@@ -142,14 +146,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Atualiza as tentativas restantes
     function atualizarTentativas() {
-        elementos.tentativasRestantes.textContent = estadoJogo.maxTentativas - estadoJogo.tentativas;
+        const tentativasRestantes = Math.max(0, estadoJogo.maxTentativas - estadoJogo.tentativas);
+        elementos.tentativasRestantes.textContent = tentativasRestantes;
         
         // Atualiza corações
         elementos.coracoes.innerHTML = '';
         for (let i = 0; i < estadoJogo.maxTentativas; i++) {
             const coracao = document.createElement('i');
             coracao.className = 'fas fa-heart';
-            coracao.style.color = i < (estadoJogo.maxTentativas - estadoJogo.tentativas) ? 'var(--danger)' : '#555';
+            coracao.style.color = i < tentativasRestantes ? 'var(--danger)' : '#555';
             coracao.style.fontSize = '1.2rem';
             elementos.coracoes.appendChild(coracao);
         }
@@ -182,40 +187,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Processa tentativa do jogador
     function processarTentativa() {
-      if (!estadoJogo.jogoAtivo || estadoJogo.currentGuess.length !== 2) return;
+        if (!estadoJogo.jogoAtivo || estadoJogo.currentGuess.length !== 2) return;
       
-      const palpite = parseInt(estadoJogo.currentGuess.join(''));
-      estadoJogo.tentativas++;
+        const palpite = parseInt(estadoJogo.currentGuess.join(''));
+        estadoJogo.tentativas++;
       
-      // Efeito visual de desaparecimento
-      const spans = elementos.guessDisplay.querySelectorAll('span');
-      spans.forEach(span => span.classList.add('fade-out'));
+        // Efeito visual de desaparecimento
+        const spans = elementos.guessDisplay.querySelectorAll('span');
+        spans.forEach(span => span.classList.add('fade-out'));
       
-      setTimeout(() => {
-          // Mensagem do terminal
-          const attemptMsg = terminalMessages.attempts[Math.min(estadoJogo.tentativas - 1, terminalMessages.attempts.length - 1)];
-          atualizarTerminal(attemptMsg);
+        setTimeout(() => {
+            // Mensagem do terminal
+            const attemptMsg = terminalMessages.attempts[Math.min(estadoJogo.tentativas - 1, terminalMessages.attempts.length - 1)];
+            atualizarTerminal(attemptMsg);
           
-          if (palpite === estadoJogo.numeroSecreto) {
-              // Código de acerto...
-          } else {
-              // Código de erro...
-              let dica = palpite < estadoJogo.numeroSecreto ? terminalMessages.higher : terminalMessages.lower;
-              atualizarTerminal(`${attemptMsg}\n${dica}`);
-              
-              // Atualiza tentativas restantes
-              atualizarTentativas();
-              
-              // Limpa automaticamente após mostrar a dica
-              estadoJogo.currentGuess = [];
-              atualizarGuessDisplay();
-              elementos.tryBtn.disabled = true;
-          }
-          
-          // Remove o efeito visual
-          spans.forEach(span => span.classList.remove('fade-out'));
-      }, 500);
-  }
+            if (palpite === estadoJogo.numeroSecreto) {
+                // Acertou
+                atualizarTerminal(terminalMessages.success);
+                definirMensagem(`Acertou! O número era ${estadoJogo.numeroSecreto}`, 'success');
+                tocarSom(sons.vitoria);
+            
+                // Atualiza contador de vitórias
+                estadoJogo.vitorias++;
+                elementos.vitorias.textContent = estadoJogo.vitorias;
+                localStorage.setItem('bruteForceWins', estadoJogo.vitorias);
+            
+                // Calcula pontos (quanto menos tentativas, mais pontos)
+                const pontos = (estadoJogo.maxTentativas - estadoJogo.tentativas + 1) * 10;
+            
+                // Finaliza com vitória
+                finalizarJogo(true, pontos);
+            } else if (estadoJogo.tentativas >= estadoJogo.maxTentativas) {
+                // Código de derrota
+                atualizarTerminal(terminalMessages.fail);
+                definirMensagem(`Errou! O número era ${estadoJogo.numeroSecreto}`, 'error');
+                tocarSom(sons.derrota);
+
+                // Atualiza tentativas restantes
+                atualizarTentativas();
+                
+                // Atualiza contador de derrotas
+                estadoJogo.derrotas++;
+                elementos.derrotas.textContent = estadoJogo.derrotas;
+                
+                // Finaliza com derrota
+                finalizarJogo(false);
+            } else {
+                // Código de tentativa normal
+                let dica = palpite < estadoJogo.numeroSecreto ? terminalMessages.higher : terminalMessages.lower;
+                atualizarTerminal(`${attemptMsg}\n${dica}`);
+                
+                // Atualiza tentativas restantes
+                atualizarTentativas();
+            }
+            
+            // Limpa automaticamente após mostrar a dica
+            estadoJogo.currentGuess = [];
+            atualizarGuessDisplay();
+            elementos.tryBtn.disabled = true;
+            
+            // Remove o efeito visual
+            spans.forEach(span => span.classList.remove('fade-out'));
+        }, 500);
+    }
 
     // Salva no ranking
     function salvarRanking(nome, pontos) {
@@ -250,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Finaliza o jogo
-    function finalizarJogo(vitoria) {
+    function finalizarJogo(vitoria, pontos = 0) {
         estadoJogo.jogoAtivo = false;
         elementos.botaoReiniciar.classList.remove('hidden');
         elementos.tryBtn.disabled = true;
@@ -259,14 +293,16 @@ document.addEventListener('DOMContentLoaded', () => {
             elementos.guessDisplay.classList.add('bounce');
             
             setTimeout(() => {
-                const nome = prompt('Parabéns! Digite seu nome para o ranking:');
-                const pontos = (estadoJogo.maxTentativas - estadoJogo.tentativas) * 10;
-                salvarRanking(nome, pontos);
+                const nome = prompt(`Parabéns! Você fez ${pontos} pontos. Digite seu nome para o ranking:`);
+                if (nome !== null) {
+                    salvarRanking(nome, pontos);
+                }
             }, 500);
         } else {
             elementos.guessDisplay.classList.add('shake');
         }
     }
+
 
     // Event Listeners
     elementos.tryBtn.addEventListener('click', processarTentativa);
