@@ -88,7 +88,7 @@ function createBoard() {
     timerDisplay.textContent = "0s";
     levelSpan.textContent = level;
     status.className = "status-info";
-    status.textContent = `Nível ${level}: Encontre todos os ${numPairs} pares!`;
+    status.textContent = `Nível ${level}: Decifre ${numPairs} pares de chaves criptografadas!`;
 
     const rows = Math.ceil(cards.length / 4);
     board.style.gridTemplateRows = `repeat(${rows}, 70px)`;

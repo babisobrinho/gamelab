@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mensagens de status do jogo
     const statusMessages = [
         "$ Iniciando sistema de jogo...",
-        "> Os hackers encontraram uma falha... mas foi tarde demais! Patches já havia selado todas as brechas.",
-        "> Exploit não perdoou: uma vulnerabilidade esquecida virou a porta de entrada para o caos!",
-        "> Exploit: 'Checkmate!' Patches: 'Not today!' Empate técnico!",
+        "> Os hackers não perdoaram: uma vulnerabilidade esquecida virou a porta de entrada para o caos!",
+        "> Os hackers encontraram uma falha... mas foi tarde demais! Os devs já haviam selado todas as brechas.",
+        "> Hackers vs Devs - Double KO! Empate técnico!",
         "> ALERTA: Movimento inválido!",
         "> Aguardando jogada do jogador..."
     ];

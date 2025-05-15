@@ -77,6 +77,9 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 ```
 gamelab/
 ├── css/
+│   ├── style-bugeater.css
+│   ├── style-exploitpattern.css
+│   ├── style-bugeater.css
 │   └── style.css
 ├── js/
 │   ├── exploitpattern.js
