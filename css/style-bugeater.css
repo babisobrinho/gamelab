@@ -258,6 +258,30 @@ body {
 }
 
 /* Estilos para o ranking */
+.btn-ranking {
+    padding: 10px 15px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+    background: var(--highlight);
+    color: var(--dark);
+    width: 50px;
+    height: 50px;
+    border: 0px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn-ranking:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
 .ranking-container {
     margin-top: 20px;
     width: 100%;
@@ -382,4 +406,87 @@ body {
     .time, .date {
         font-size: 0.7rem;
     }
+}
+
+/* Add these styles to the end of the file */
+.ranking-container {
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: 90%;
+    max-width: 500px;
+    color: white;
+    border: 2px solid var(--highlight);
+}
+
+.ranking-container h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--highlight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.ranking-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.ranking-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ranking-entry.top-player {
+    background: rgba(255, 215, 0, 0.15);
+    border-left: 3px solid gold;
+}
+
+.rank {
+    font-weight: bold;
+    color: var(--highlight);
+    width: 30px;
+}
+
+.name {
+    flex: 1;
+    text-align: left;
+    padding-left: 15px;
+}
+
+.time {
+    width: 80px;
+    text-align: right;
+}
+
+.date {
+    width: 80px;
+    text-align: right;
+    color: var(--secondary);
+    font-size: 0.8rem;
+}
+
+/* Ranking */
+.ranking-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ranking-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.ranking-list::-webkit-scrollbar-thumb {
+    background: var(--highlight);
+    border-radius: 3px;
 }

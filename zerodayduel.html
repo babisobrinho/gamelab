@@ -7,6 +7,7 @@
     <link rel="icon" type="image/x-icon" href="img/favicon.svg">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Roboto:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/style-zerodayduel.css">
 </head>
 <body>
@@ -14,6 +15,7 @@
         <header class="header">
             <h1><i class="fas fa-code"></i> Zero-Day <span>Duel</span></h1>
             <div class="score">
+                <div class="home-link"><a href="index.html"><i class="fas fa-home"></i></a></div>
                 <div class="wins"><i class="fas fa-trophy"></i> <span id="playerX-score">0</span></div>
                 <div class="draws"><i class="fas fa-handshake"></i> <span id="draws">0</span></div>
                 <div class="losses"><i class="fas fa-trophy"></i> <span id="playerO-score">0</span></div>
@@ -63,13 +65,11 @@
         </button>
 
         <footer class="footer">
-            <p>&copy; <span id="current-year"></span> Game Lab. Todos os direitos reservados.</p>
+            <p>&copy; <span id="current-year"></span> Game Lab - IEFP Leiria. Todos os direitos reservados.</p>
         </footer>
     </div>
 
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
+    <script src="js/footer.js"></script>
     <script src="js/zerodayduel.js"></script>
 </body>
 </html>

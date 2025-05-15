@@ -7,6 +7,7 @@
     <link rel="icon" type="image/x-icon" href="img/favicon.svg">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Roboto:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/style-bugeater.css">
 </head>
 <body>
@@ -14,6 +15,7 @@
         <header class="header">
             <h1><i class="fas fa-bug"></i> Bug<span>Eater</span></h1>
             <div class="score">
+                <div class="home-link"><a href="index.html"><i class="fas fa-home"></i></a></div>
                 <div class="wins"><i class="fas fa-star"></i> <span id="score">0</span></div>
                 <div class="losses"><i class="fas fa-clock"></i> <span id="game-time">00:00</span></div>
             </div>
@@ -54,19 +56,25 @@
                 <div class="game-over-actions">
                     <button id="play-again" class="btn restart-btn">Jogar Novamente</button>
                 </div>
-          
             </div>
+        </div>
+        <div class="ranking-container hidden" id="ranking">
+            <h3><i class="fas fa-crown"></i> Ranking</h3>
+            <div class="ranking-list" id="ranking-list"></div>
+            <button id="close-ranking" class="btn">Fechar</button>
         </div>
         <div class="overlay hidden" id="overlay"></div>
 
+        <button id="show-ranking" class="btn-ranking">
+            <i class="fas fa-trophy"></i> 
+        </button>
+
         <footer class="footer">
-            <p>&copy; <span id="current-year"></span> Game Lab - IEFP Leiria. Todos os direitos reservados</p>
+            <p>&copy; <span id="current-year"></span> Game Lab - IEFP Leiria. Todos os direitos reservados.</p>
         </footer>
     </div>
 
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
+    <script src="js/footer.js"></script>
     <script src="js/bugeater.js"></script>
 </body>
 </html>
