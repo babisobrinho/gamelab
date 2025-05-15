@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "> Ativando medidas de segurança...",
             "> Última tentativa antes do bloqueio...",
         ],
-        higher: "> Senha incorreta: O número é maior",
-        lower: "> Senha incorreta: O número é menor",
+        higher: "> [ERRO] A senha é maior",
+        lower: "> [ERRO] A senha é menor",
         success: "💻 SISTEMA COMPROMETIDO\n> Senha encontrada!",
         fail: "🚨 SISTEMA BLOQUEADO\n> Muitas tentativas falhas"
     };
