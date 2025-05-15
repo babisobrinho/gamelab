@@ -74,7 +74,7 @@ body {
     color: var(--highlight);
 }
 
-.games-grid {
+.games-grid, .team-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
@@ -243,14 +243,6 @@ body {
 }
 
 /* Team Page Styles */
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 colunas */
-    grid-template-rows: repeat(2, 1fr);    /* 2 linhas */
-    gap: 25px;
-    margin: 30px 0;
-}
-
 .member-card {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 15px;
@@ -310,6 +302,7 @@ body {
     padding: 25px; 
     text-align: center;
     border: 1px solid var(--highlight);
+    margin-top: 40px;
 }
 
 .institution-card {
@@ -337,26 +330,6 @@ body {
 
 #close-ranking {
     margin-top: 10px;
-}
-
-/* Responsividade para as cards da equipe */
-@media (max-width: 1200px) {
-    .team-grid {
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: auto;
-    }
-}
-
-@media (max-width: 900px) {
-    .team-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    .team-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* Estilos do Jogo da Forca */
@@ -1069,7 +1042,7 @@ body {
         justify-content: center;
     }
     
-    .games-grid {
+    .games-grid, .team-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -1122,14 +1095,6 @@ body {
 }
 
 /* Team Page Styles */
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
-    grid-template-rows: repeat(2, 1fr);    /* 2 linhas */
-    gap: 25px;
-    margin: 30px 0;
-}
-
 .member-card {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 15px;
@@ -1204,25 +1169,6 @@ body {
 .institution-card p {
     margin-bottom: 10px;
     color: rgba(255, 255, 255, 0.8);
-}
-
-@media (max-width: 1200px) {
-    .team-grid {
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: auto;
-    }
-}
-
-@media (max-width: 900px) {
-    .team-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    .team-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* Estilos específicos para o Brute Force */
@@ -1399,7 +1345,7 @@ body {
         justify-content: center;
     }
 
-    .games-grid {
+    .games-grid, .team-grid{
         grid-template-columns: 1fr;
     }
 }
