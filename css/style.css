@@ -852,7 +852,7 @@ body {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/@media (max-width: 1200px) {
+@media (max-width: 1200px) {
     .team-grid {
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: auto;

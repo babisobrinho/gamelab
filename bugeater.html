@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Eater</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.svg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style-bugeater.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-bug"></i> Bug<span>Eater</span></h1>
+            <div class="score">
+                <div class="wins"><i class="fas fa-star"></i> <span id="score">0</span></div>
+                <div class="losses"><i class="fas fa-clock"></i> <span id="game-time">00:00</span></div>
+            </div>
+        </header>
+
+        <main class="game-area">
+            <canvas id="game-canvas" width="600" height="400"></canvas>
+            
+            <div class="mobile-gamepad">
+                <div class="d-pad">
+                    <button id="up-btn" class="control-btn"><i class="fas fa-arrow-up"></i></button>
+                    <div class="horizontal">
+                        <button id="left-btn" class="control-btn"><i class="fas fa-arrow-left"></i></button>
+                        <button id="right-btn" class="control-btn"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <button id="down-btn" class="control-btn"><i class="fas fa-arrow-down"></i></button>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button id="pause-btn" class="btn hint-btn">
+                    <i class="fas fa-pause"></i> Pausar
+                </button>
+                <button id="sound-btn" class="btn sound-btn">
+                    <i class="fas fa-volume-up"></i> Som
+                </button>
+                <button id="restart-btn" class="btn restart-btn">
+                    <i class="fas fa-sync-alt"></i> Reiniciar
+                </button>
+            </div>
+        </main>
+
+        <div class="game-over hidden" id="game-over">
+            <h2>Game Over!</h2>
+            <div class="game-over-content">
+                <p>Pontuação: <span id="final-score">0</span></p>
+                <p>Tempo: <span id="final-time">00:00</span></p>
+                <div class="game-over-actions">
+                    <button id="play-again" class="btn restart-btn">Jogar Novamente</button>
+                </div>
+          
+            </div>
+        </div>
+        <div class="overlay hidden" id="overlay"></div>
+
+        <footer class="footer">
+            <p>&copy; <span id="current-year"></span> Game Lab - IEFP Leiria. Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+    <script src="js/bugeater.js"></script>
+</body>
+</html>

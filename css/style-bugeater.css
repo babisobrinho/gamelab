@@ -1,0 +1,385 @@
+:root {
+    --primary: #2b2d42;
+    --secondary: #8d99ae;
+    --accent: #ef233c;
+    --highlight: #06d6a0;
+    --light: #edf2f4;
+    --dark: #1a1a2e;
+    --success: #4cc9f0;
+    --danger: #f72585;
+    --warning: #f8961e;
+    --snake: #4AF626;
+    --food: #FF2E4D;
+    --bg: #011627;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: var(--light);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 900px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.header {
+    background: var(--primary);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--highlight);
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header h1 span {
+    color: var(--highlight);
+    font-family: 'Fira Code', monospace;
+}
+
+.score {
+    display: flex;
+    gap: 20px;
+}
+
+.wins, .losses {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 1.2rem;
+}
+
+.wins {
+    color: var(--highlight);
+}
+
+.losses {
+    color: var(--light);
+}
+
+.game-area {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    align-items: center;
+    gap: 20px;
+}
+
+#game-canvas {
+    background-color: var(--bg);
+    border-radius: 10px;
+    border: 2px solid var(--highlight);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.hint-btn {
+    background: var(--warning);
+    color: var(--dark);
+}
+
+.sound-btn {
+    background: var(--secondary);
+    color: var(--dark);
+}
+
+.restart-btn {
+    background: var(--highlight);
+    color: var(--dark);
+}
+
+.restart-btn:hover {
+    background: #06d6a0;
+}
+
+.footer {
+    background: var(--primary);
+    padding: 15px;
+    text-align: center;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.game-over {
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+    padding: 30px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: 90%;
+    max-width: 400px;
+    color: white;
+    text-align: center;
+    border: 2px solid var(--highlight);
+}
+
+.game-over h2 {
+    color: var(--danger);
+    margin-bottom: 15px;
+    font-size: 2rem;
+}
+
+.game-over-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.game-over-content p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.game-over-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 99;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Gamepad mobile */
+.mobile-gamepad {
+    display: none;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.d-pad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.horizontal {
+    display: flex;
+    gap: 60px;
+}
+
+.control-btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(43, 45, 66, 0.7);
+    color: var(--light);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.control-btn:active {
+    background: var(--highlight);
+    color: var(--dark);
+    transform: scale(0.95);
+}
+
+/* Estilos para o ranking */
+.ranking-container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.ranking-container h3 {
+    color: var(--highlight);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.2rem;
+}
+
+.ranking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.ranking-entry {
+    display: grid;
+    grid-template-columns: 30px 80px 60px 1fr;
+    align-items: center;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.ranking-entry.top-player {
+    background: rgba(255, 215, 0, 0.15);
+    border-left: 3px solid gold;
+}
+
+.rank {
+    font-weight: bold;
+    color: var(--highlight);
+}
+
+.score {
+    font-weight: bold;
+}
+
+.time, .date {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Scrollbar personalizada */
+.ranking-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ranking-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.ranking-list::-webkit-scrollbar-thumb {
+    background: var(--highlight);
+    border-radius: 3px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .score {
+        width: 100%;
+        justify-content: space-around;
+    }
+    
+    #game-canvas {
+        width: 100%;
+        height: auto;
+        max-height: 60vh;
+    }
+    
+    .mobile-gamepad {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .horizontal {
+        gap: 40px;
+    }
+    
+    .control-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .game-over {
+        padding: 20px;
+    }
+    
+    .ranking-entry {
+        grid-template-columns: 25px 70px 50px 1fr;
+        font-size: 0.8rem;
+    }
+    
+    .time, .date {
+        font-size: 0.7rem;
+    }
+}
