@@ -321,6 +321,7 @@ body {
 }
 
 .rank {
+    text-align: center;
     font-weight: bold;
     color: var(--highlight);
 }
@@ -329,7 +330,8 @@ body {
     font-weight: bold;
 }
 
-.time, .date {
+.time {
+    text-align: center !important;
     font-size: 0.8rem;
     opacity: 0.8;
 }
