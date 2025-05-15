@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    console.log("DOM");
+
     // Elementos DOM
     const elementos = {
         terminal: document.getElementById('terminal-display'),
         guessDisplay: document.getElementById('guess-display'),
         keyboard: document.querySelector('.keyboard'),
-        message: document.querySelector('.message-text'),
         tryBtn: document.getElementById('try-btn'),
         clearBtn: document.getElementById('clear-btn'),
         botaoSom: document.getElementById('sound-btn'),
@@ -13,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         derrotas: document.getElementById('losses'),
         tentativasRestantes: document.getElementById('remaining-attempts'),
         coracoes: document.getElementById('hearts'),
-        caixaMensagem: document.getElementById('message'),
         ranking: document.getElementById('ranking'),
         overlay: document.getElementById('overlay'),
         rankingList: document.getElementById('ranking-list'),
@@ -27,14 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
         attempts: [
             "> Tentando combinação...",
             "> Testando variações...",
-            "> Varrendo possibilidades...",
             "> Aumentando potência do ataque...",
             "> Tentando combinações comuns...",
-            "> Acesso negado [Firewall ativado]",
+            "> Acesso negado [Firewall Ativado]",
             "> Tentando novamente com novo algoritmo...",
-            "> Última tentativa antes do bloqueio...",
             "> Sistema detectando múltiplas tentativas...",
-            "> Ativando medidas de segurança..."
+            "> Ativando medidas de segurança...",
+            "> Última tentativa antes do bloqueio...",
         ],
         higher: "> Senha incorreta: O número é maior",
         lower: "> Senha incorreta: O número é menor",
@@ -48,23 +48,26 @@ document.addEventListener('DOMContentLoaded', () => {
         tentativas: 0,
         maxTentativas: 10,
         currentGuess: [],
-        vitorias: parseInt(localStorage.getItem('bruteForceWins')) || 0,
-        derrotas: parseInt(localStorage.getItem('bruteForceLosses')) || 0,
+        vitorias: 0,
+        derrotas: 0,
         somAtivado: true,
         jogoAtivo: true
     };
 
     // Sons
     const sons = {
-        keyPress: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3'),
-        correto: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3'),
-        errado: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3'),
-        vitoria: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'),
-        derrota: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-lose-2027.mp3')
+      keyPress: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3'),
+      correto: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3'),
+      errado: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3'),
+      vitoria: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'),
+      derrota: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-lose-2027.mp3')
     };
 
     // Inicialização do jogo
     function iniciarJogo() {
+
+        console.log("iniciarJogo()");
+
         // Gera número aleatório entre 1 e 99
         estadoJogo.numeroSecreto = Math.floor(Math.random() * 99) + 1;
         estadoJogo.tentativas = 0;
@@ -76,22 +79,18 @@ document.addEventListener('DOMContentLoaded', () => {
         atualizarGuessDisplay();
         criarTecladoNumerico();
         atualizarTentativas();
-
-        // Atualiza contadores de vitórias/derrotas
-        elementos.vitorias.textContent = estadoJogo.vitorias;
-        elementos.derrotas.textContent = estadoJogo.derrotas;
         
         // Reseta elementos da UI
         elementos.botaoReiniciar.classList.add('hidden');
         elementos.guessDisplay.className = 'guess-display';
         elementos.tryBtn.disabled = false;
-        
-        // Mensagem inicial
-        definirMensagem('Adivinhe o número!', 'info');
     }
 
     // Cria o teclado numérico
     function criarTecladoNumerico() {
+
+        console.log("criarTecladoNumerico()");
+
         elementos.keyboard.innerHTML = '';
         
         // Adiciona botões de 0 a 9
@@ -107,6 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Adiciona número ao palpite atual
     function adicionarNumero(numero) {
+
+        console.log("adicionarNumero()" + numero);
+
         if (!estadoJogo.jogoAtivo || estadoJogo.currentGuess.length >= 2) return;
         
         tocarSom(sons.keyPress);
@@ -116,11 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ativa o botão de tentar se tiver 2 dígitos
         if (estadoJogo.currentGuess.length === 2) {
             elementos.tryBtn.disabled = false;
+            console.log("Ativa o botão de tentar");
         }
     }
 
     // Limpa o palpite atual
     function limparPalpite() {
+        console.log("limparPalpite()");
+
         tocarSom(sons.keyPress);
         estadoJogo.currentGuess = [];
         atualizarGuessDisplay();
@@ -129,6 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Atualiza a exibição do palpite
     function atualizarGuessDisplay() {
+
+        console.log("atualizarGuessDisplay()");
+
         const spans = elementos.guessDisplay.querySelectorAll('span');
         
         for (let i = 0; i < 2; i++) {
@@ -139,6 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Atualiza o terminal
     function atualizarTerminal(mensagem) {
+        console.log("atualizarTerminal()" + mensagem);
+
         elementos.terminal.textContent = mensagem;
         elementos.terminal.classList.add('typing');
         setTimeout(() => elementos.terminal.classList.remove('typing'), 500);
@@ -146,28 +156,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Atualiza as tentativas restantes
     function atualizarTentativas() {
-        const tentativasRestantes = Math.max(0, estadoJogo.maxTentativas - estadoJogo.tentativas);
-        elementos.tentativasRestantes.textContent = tentativasRestantes;
+
+        console.log("atualizarTentativas()");
+
+        elementos.tentativasRestantes.textContent = estadoJogo.maxTentativas - estadoJogo.tentativas;
+
+        console.log("Tentativas restantes: " + elementos.tentativasRestantes.textContent);
         
         // Atualiza corações
         elementos.coracoes.innerHTML = '';
         for (let i = 0; i < estadoJogo.maxTentativas; i++) {
             const coracao = document.createElement('i');
             coracao.className = 'fas fa-heart';
-            coracao.style.color = i < tentativasRestantes ? 'var(--danger)' : '#555';
+            coracao.style.color = i < (estadoJogo.maxTentativas - estadoJogo.tentativas) ? 'var(--danger)' : '#555';
             coracao.style.fontSize = '1.2rem';
             elementos.coracoes.appendChild(coracao);
         }
     }
 
-    // Configura mensagem na tela
-    function definirMensagem(texto, tipo = 'info') {
-        elementos.mensagem.textContent = texto;
-        elementos.caixaMensagem.className = 'message-box ' + tipo;
-    }
-
     // Alterna som
     function alternarSom() {
+
+        console.log("alternarSom()");
+
         estadoJogo.somAtivado = !estadoJogo.somAtivado;
         elementos.botaoSom.innerHTML = estadoJogo.somAtivado ? 
             '<i class="fas fa-volume-up"></i> Som' : 
@@ -176,21 +187,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Toca som
     function tocarSom(som) {
-      if (estadoJogo.somAtivado) {
-        som.currentTime = 0; // Reinicia o som se já estiver tocando
-        som.play().catch(e => {
-          // Tenta carregar novamente se falhar
-          som.load().then(() => som.play()).catch(e => console.log("Erro ao reproduzir som:", e));
-        });
-      }
+
+        console.log("tocarSom()" + som);
+
+        if (estadoJogo.somAtivado) {
+            som.currentTime = 0; // Reinicia o som se já estiver tocando
+            som.play().catch(e => {
+                // Tenta carregar novamente se falhar
+                som.load().then(() => som.play()).catch(e => console.log("Erro ao reproduzir som:", e));
+            });
+        }
     }
 
     // Processa tentativa do jogador
     function processarTentativa() {
+
+        console.log("processarTentativa()");
+
         if (!estadoJogo.jogoAtivo || estadoJogo.currentGuess.length !== 2) return;
       
         const palpite = parseInt(estadoJogo.currentGuess.join(''));
         estadoJogo.tentativas++;
+
+        console.log("Palpite: " + palpite);
+        console.log("estadoJogo.tentativas: " + estadoJogo.tentativas);
       
         // Efeito visual de desaparecimento
         const spans = elementos.guessDisplay.querySelectorAll('span');
@@ -200,12 +220,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // Mensagem do terminal
             const attemptMsg = terminalMessages.attempts[Math.min(estadoJogo.tentativas - 1, terminalMessages.attempts.length - 1)];
             atualizarTerminal(attemptMsg);
+            console.log("attemptMsg: " + attemptMsg);
+
+            console.log("estadoJogo.numeroSecreto: " + estadoJogo.numeroSecreto);
           
             if (palpite === estadoJogo.numeroSecreto) {
                 // Acertou
                 atualizarTerminal(terminalMessages.success);
-                definirMensagem(`Acertou! O número era ${estadoJogo.numeroSecreto}`, 'success');
                 tocarSom(sons.vitoria);
+
+                console.log("terminalMessages.success: " + terminalMessages.success);
+                console.log("sons.vitoria: " + sons.vitoria);
             
                 // Atualiza contador de vitórias
                 estadoJogo.vitorias++;
@@ -218,20 +243,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Finaliza com vitória
                 finalizarJogo(true, pontos);
             } else if (estadoJogo.tentativas >= estadoJogo.maxTentativas) {
+                // Atualiza tentativas
+                atualizarTentativas();
+
                 // Código de derrota
                 atualizarTerminal(terminalMessages.fail);
-                definirMensagem(`Errou! O número era ${estadoJogo.numeroSecreto}`, 'error');
                 tocarSom(sons.derrota);
-
-                // Atualiza tentativas restantes
-                atualizarTentativas();
                 
                 // Atualiza contador de derrotas
                 estadoJogo.derrotas++;
                 elementos.derrotas.textContent = estadoJogo.derrotas;
                 
                 // Finaliza com derrota
-                finalizarJogo(false);
+                finalizarJogo(false, 0);
             } else {
                 // Código de tentativa normal
                 let dica = palpite < estadoJogo.numeroSecreto ? terminalMessages.higher : terminalMessages.lower;
@@ -284,9 +308,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Finaliza o jogo
-    function finalizarJogo(vitoria, pontos = 0) {
+    function finalizarJogo(vitoria, pontos) {
         estadoJogo.jogoAtivo = false;
         elementos.botaoReiniciar.classList.remove('hidden');
+        elementos.tryBtn.classList.add('hidden');
+        elementos.clearBtn.classList.add('hidden');
         elementos.tryBtn.disabled = true;
         
         if (vitoria) {

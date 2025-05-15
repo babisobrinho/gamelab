@@ -335,6 +335,10 @@ body {
     color: rgba(255, 255, 255, 0.8);
 }
 
+#close-ranking {
+    margin-top: 10px;
+}
+
 /* Responsividade para as cards da equipe */
 @media (max-width: 1200px) {
     .team-grid {
