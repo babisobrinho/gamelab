@@ -45,10 +45,11 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 ### 🐞 Bug Eater
 <img src="img/firewallduel.png" width="500">
 
-- Pedra, papel e tesoura com elementos de cibersegurança
-- Firewall vs Vírus vs DDoS
+- Inspirado no classico jogo da cobra
+- Elimine todos os Bugs gerados
+- Seja rapido para não acabar batendo nas paredes
 
-🔗 [Jogar Firewall Duel](https://babisobrinho.github.io/gamelab/bugeater.html)
+🔗 [Jogar Bug Eater](https://babisobrinho.github.io/gamelab/bugeater.html)
 
 ---
 
