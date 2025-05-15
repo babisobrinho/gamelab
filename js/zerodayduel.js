@@ -22,24 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mensagens de status do jogo
     const statusMessages = [
         "$ Iniciando sistema de jogo...",
-        "✅ Jogador X venceu!",
-        "✅ Jogador O venceu!",
-        "🤝 Empate!",
-        "ALERTA: Movimento inválido!",
+        "> Os hackers encontraram uma falha... mas foi tarde demais! Patches já havia selado todas as brechas.",
+        "> Exploit não perdoou: uma vulnerabilidade esquecida virou a porta de entrada para o caos!",
+        "> Exploit: 'Checkmate!' Patches: 'Not today!' Empate técnico!",
+        "> ALERTA: Movimento inválido!",
         "> Aguardando jogada do jogador..."
     ];
 
     // Frases de ataque/defesa temáticas
     const attackPhrases = [
         "> Exploit detectado! Tentando invadir o sistema...",
-        "🛡️ Patch aplicado! Fortalecendo a defesa...",
-        "🔥 Ataque em andamento! Protegendo as linhas de código...",
-        "🔒 Sistema reforçado contra vulnerabilidades!",
-        "💥 Exploit avançando... Precisa de uma contra-medida!",
-        "🛡️ Defesa ativada! Mantendo o sistema seguro...",
-        "⚔️ Embate entre exploits e patches!",
-        "🚨 Alerta! Tentativa de invasão detectada!",
-        "🛡️ Atualização de segurança em progresso..."
+        "> Patch aplicado! Fortalecendo a defesa...",
+        "> Ataque em andamento! Protegendo as linhas de código...",
+        "> Sistema reforçado contra vulnerabilidades!",
+        "> Exploit avançando... Precisa de uma contra-medida!",
+        "> Defesa ativada! Mantendo o sistema seguro...",
+        "> Embate entre exploits e patches!",
+        "> Alerta! Tentativa de invasão detectada!",
+        "> Atualização de segurança em progresso..."
     ];
 
     // Estado do jogo
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateBoard(); // Atualiza a exibição do tabuleiro
         updatePlayerIndicator(); // Atualiza o indicador de jogador
-        setMessage(statusMessages[0], 'info'); // Mostra mensagem inicial
+        setMessage("É a vez dos Hackers!", 'info'); // Mostra mensagem inicial
         typeWriter(elements.status, statusMessages[0]); // Efeito de máquina de escrever
     }
 
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Alterna o jogador
         gameState.currentPlayer = gameState.currentPlayer === 'X' ? 'O' : 'X';
         updatePlayerIndicator();
-        setMessage(`Vez do Jogador ${gameState.currentPlayer}`, 'info');
+        setMessage(`É a vez dos ${gameState.currentPlayer === 'X' ? 'Hackers' : 'Devs'}`, 'info');
     }
 
     // Verifica se um jogador venceu
@@ -206,17 +206,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (result === 'X') {
             gameState.scores.playerX++;
             typeWriter(elements.status, statusMessages[1]);
-            setMessage('🎉 Jogador X venceu!', 'success');
+            setMessage('Os devs venceram!', 'success');
             playSound(sounds.win);
         } else if (result === 'O') {
             gameState.scores.playerO++;
             typeWriter(elements.status, statusMessages[2]);
-            setMessage('🎉 Jogador O venceu!', 'success');
+            setMessage('Os hackers venceram!', 'success');
             playSound(sounds.win);
         } else {
             gameState.scores.draws++;
             typeWriter(elements.status, statusMessages[3]);
-            setMessage('🤝 Empate!', 'info');
+            setMessage('Empate técnico!', 'info');
             playSound(sounds.draw);
         }
 
@@ -333,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.rankingList.innerHTML = gameState.gameHistory.map((game, index) => `
             <li>
                 <span class="rank">${index + 1}º</span>
-                <span class="name">${game.winner === 'X' ? 'Jogador X' : game.winner === 'O' ? 'Jogador O' : 'Empate'}</span>
+                <span class="name">${game.winner === 'X' ? 'Hackers' : game.winner === 'O' ? 'Devs' : 'Empate Técnico'}</span>
                 <span class="score">${game.mode}</span>
                 <span class="date">${game.date}</span>
             </li>
