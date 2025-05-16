@@ -1,4 +1,4 @@
-# 🎮 Game Lab | TETPSI 2º Ano – IEFP Leiria
+# 🎮 Game Lab
 
 Este repositório reúne uma coleção de jogos interativos desenvolvidos pelos alunos do curso **Técnico Especialista de Gestão e Programação de Sistemas Informáticos** – 2º ano, apresentados no **16º Fórum Emprego e Formação** na **Feira de Leiria** 🎓✨
 
@@ -116,8 +116,8 @@ gamelab/
 - **CSS3** – Estilização com Flexbox, Grid e animações
 - **JavaScript** (Vanilla) – Lógica dos jogos, manipulação DOM, interatividade
 - **Font Awesome** – Ícones visuais
-- **Google Fonts** – Tipografia moderna
-- **LocalStorage** – Armazenamento de rankings localmente
+- **GitHub** – Controlo de versões
+- **Local Storage** – Armazenamento de rankings localmente
 
 ## 👥 Equipa de Desenvolvimento
 
@@ -127,7 +127,6 @@ gamelab/
 - [Rebeca Santos](https://github.com/RebecaSantosb)
 - [Aline Armando](https://github.com/kiamy6)
 - [Thalyson Santos](https://github.com/taysoic)
-- [Diogo Simão](https://github.com/ritmico1)
 
 ## 📜 Licença
 
