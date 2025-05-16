@@ -43,7 +43,7 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 ---
 
 ### 🐞 Bug Eater
-<img src="img/firewallduel.png" width="500">
+<img src="img/demo-firewallduel.png" width="500">
 
 - Inspirado no classico jogo da cobra
 - Elimine todos os Bugs gerados
@@ -54,17 +54,18 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 ---
 
 ### 🛡️ Zero-Day Duel
-<img src="img/zerodayduel.png" width="500">
+<img src="img/demo-zerodayduel.png" width="500">
 
-- Jogo da velha com tema de exploits e patches
+- Jogo do galo com tema de exploits e patches
 - Estratégia em campo 3x3
+- Hackers vs Devs
 
 🔗 [Jogar Zero-Day Duel](https://babisobrinho.github.io/gamelab/zerodayduel.html)
 
 ---
 
 ### 🔐 Brute Force
-<img src="img/demobruteforce.png" width="500">
+<img src="img/demo-bruteforce.png" width="500">
 
 - Descubra o número de dois dígitos com o menor número de tentativas
 - Terminal interativo com dicas e feedback sonoro
