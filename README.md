@@ -43,7 +43,7 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 ---
 
 ### 🐞 Bug Eater
-<img src="img/demo-firewallduel.png" width="500">
+<img src="img/demo-bugeater.png" width="500">
 
 - Inspirado no classico jogo da cobra
 - Elimine todos os Bugs gerados
