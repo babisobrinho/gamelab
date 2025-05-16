@@ -76,28 +76,37 @@ Cada jogo simula um cenário relacionado à segurança, lógica ou raciocínio, 
 
 ```
 gamelab/
-├── css/
+├── css/                            # Estilos e design
 │   ├── style-bugeater.css
 │   ├── style-exploitpattern.css
-│   ├── style-bugeater.css
+│   ├── style-zerodayduel.css
 │   └── style.css
-├── js/
-│   ├── exploitpattern.js
-│   ├── jailbreaker.js
+├── js/                             # Jogos
 │   ├── bruteforce.js
-│   └── ...
-├── img/
+│   ├── bugeater.js
+│   ├── encryptionrush.js
+│   ├── exploitpattern.js
+│   ├── footer.js                   # Footer dinâmico
+│   ├── jailbreaker.js
+│   └── zerodayduel.js
+├── img/                            # Imagens para demos
+│   ├── demo-bruteforce.png
+│   ├── demo-bugeater.png
+│   ├── demo-encryptionrush.png
 │   ├── demo-exploitpattern.png
+│   ├── favicon.svg                 # Ícone
 │   ├── demo-jailbreaker.png
-│   ├── demobruteforce.png
-│   └── ...
-├── index.html
-├── about.html
-├── team.html
-├── exploitpattern.html
-├── jailbreaker.html
+│   └── demo-zerodayduel.png
+├── about.html                      # Sobre o projeto
 ├── bruteforce.html
-└── ...
+├── bugeater.html
+├── encryptionrush.html
+├── exploitpattern.html
+├── index.html                      # Lista de jogos
+├── jailbreaker.html
+├── README.md                       # Informações
+├── team.html                       # Equipa responsável
+└── zerodayduel.html
 ```
 
 ## 💡 Tecnologias Utilizadas
