@@ -1,4 +1,5 @@
 # 🎮 Game Lab
+<img src="img/gamelab.png" width="500">
 
 Este repositório reúne uma coleção de jogos interativos desenvolvidos pelos alunos do curso **Técnico Especialista de Gestão e Programação de Sistemas Informáticos** – 2º ano, apresentados no **16º Fórum Emprego e Formação** na **Feira de Leiria** 🎓✨
 
